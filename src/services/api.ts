@@ -28,6 +28,21 @@ class ApiService {
     return this.digiflazzConfig;
   }
 
+  // Product Image Management
+  saveProductImage(productId: string, imageUrl: string): void {
+    const customImages = this.getCustomImages();
+    customImages[productId] = imageUrl;
+    customImages.timestamp = new Date().toISOString();
+    
+    localStorage.setItem('custom_images', JSON.stringify(customImages));
+    console.log(`Saved custom image for ${productId}:`, imageUrl);
+  }
+
+  private getCustomImages(): Record<string, any> {
+    const stored = localStorage.getItem('custom_images');
+    return stored ? JSON.parse(stored) : {};
+  }
+
   // Game ID Configuration Management
   saveGameIdConfig(productId: string, config: GameIdConfig): void {
     const gameIdConfigs = this.getGameIdConfigs();
@@ -297,11 +312,12 @@ class ApiService {
       .filter((product): product is Product => product !== null);
   }
 
-  // Apply custom configurations (prices, game ID configs, status overrides)
+  // Apply custom configurations (prices, game ID configs, status overrides, images)
   private applyCustomConfigurations(products: Product[]): Product[] {
     const customPrices = this.getCustomPrices();
     const statusOverrides = this.getStatusOverrides();
     const gameIdConfigs = this.getGameIdConfigs();
+    const customImages = this.getCustomImages();
     
     return products.map(product => {
       // Apply product-level status override
@@ -310,10 +326,14 @@ class ApiService {
       // Apply custom game ID configuration if exists
       const customGameIdConfig = gameIdConfigs[product.id];
       
+      // Apply custom image if exists
+      const customImage = customImages[product.id];
+      
       const updatedProduct = {
         ...product,
         status: productStatus || product.status,
         gameIdConfig: customGameIdConfig || product.gameIdConfig,
+        image: customImage || product.image, // Apply custom image
         variants: product.variants.map(variant => {
           const priceKey = `${product.id}-${variant.id}`;
           const statusKey = `${product.id}-${variant.id}`;
@@ -717,6 +737,7 @@ class ApiService {
     localStorage.removeItem('custom_prices');
     localStorage.removeItem('status_overrides');
     localStorage.removeItem('game_id_configs');
+    localStorage.removeItem('custom_images');
     console.log('Cleared synced products and custom settings from localStorage');
   }
 
