@@ -23,7 +23,11 @@ import {
   AlertTriangle,
   Settings,
   Gamepad2,
-  Server
+  Server,
+  Image,
+  Upload,
+  Link as LinkIcon,
+  Trash2
 } from 'lucide-react';
 
 const AdminProductsPage: React.FC = () => {
@@ -35,6 +39,7 @@ const AdminProductsPage: React.FC = () => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [editingVariant, setEditingVariant] = useState<{ productId: string; variantId: string; price: number } | null>(null);
   const [editingGameConfig, setEditingGameConfig] = useState<{ productId: string; config: GameIdConfig } | null>(null);
+  const [editingImage, setEditingImage] = useState<{ productId: string; imageUrl: string } | null>(null);
   const [syncInfo, setSyncInfo] = useState<{ lastSync: string | null; hasCache: boolean }>({ lastSync: null, hasCache: false });
   const [saveMessage, setSaveMessage] = useState<string>('');
 
@@ -238,6 +243,58 @@ const AdminProductsPage: React.FC = () => {
     setEditingGameConfig(null);
   };
 
+  const startEditImage = (productId: string) => {
+    const product = products.find(p => p.id === productId);
+    setEditingImage({
+      productId,
+      imageUrl: product?.image || ''
+    });
+  };
+
+  const saveImage = () => {
+    if (!editingImage) return;
+
+    const updatedProducts = products.map(product => 
+      product.id === editingImage.productId 
+        ? { ...product, image: editingImage.imageUrl }
+        : product
+    );
+
+    setProducts(updatedProducts);
+    
+    // Save to API service
+    apiService.saveProductImage(editingImage.productId, editingImage.imageUrl);
+    
+    const product = updatedProducts.find(p => p.id === editingImage.productId);
+    showSaveMessage(`Gambar produk ${product?.name} berhasil disimpan`);
+    
+    setEditingImage(null);
+  };
+
+  const removeImage = () => {
+    if (!editingImage) return;
+
+    const updatedProducts = products.map(product => 
+      product.id === editingImage.productId 
+        ? { ...product, image: undefined }
+        : product
+    );
+
+    setProducts(updatedProducts);
+    
+    // Save to API service (empty string to remove)
+    apiService.saveProductImage(editingImage.productId, '');
+    
+    const product = updatedProducts.find(p => p.id === editingImage.productId);
+    showSaveMessage(`Gambar produk ${product?.name} berhasil dihapus`);
+    
+    setEditingImage(null);
+  };
+
+  const cancelImageEdit = () => {
+    setEditingImage(null);
+  };
+
   const showSaveMessage = (message: string) => {
     setSaveMessage(message);
     setTimeout(() => setSaveMessage(''), 3000);
@@ -272,7 +329,7 @@ const AdminProductsPage: React.FC = () => {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Manajemen Produk & Konfigurasi</h1>
-            <p className="text-gray-600 mt-2">Kelola produk, harga, dan konfigurasi Game ID dari API Digiflazz</p>
+            <p className="text-gray-600 mt-2">Kelola produk, harga, gambar, dan konfigurasi Game ID dari API Digiflazz</p>
           </div>
           
           <div className="mt-4 sm:mt-0 flex gap-3">
@@ -311,6 +368,7 @@ const AdminProductsPage: React.FC = () => {
                 • <strong>Produk NONAKTIF</strong> = Tidak muncul di halaman user sama sekali<br />
                 • <strong>Varian NONAKTIF</strong> = Hanya varian tersebut yang disembunyikan<br />
                 • <strong>Konfigurasi Game ID</strong> = Atur field yang wajib diisi user (Game ID, Server ID)<br />
+                • <strong>Gambar Produk</strong> = Upload atau masukkan URL gambar custom untuk setiap produk<br />
                 • Semua perubahan tersimpan otomatis dan langsung berlaku untuk user
               </p>
             </div>
@@ -328,7 +386,7 @@ const AdminProductsPage: React.FC = () => {
                     Terakhir sync: {formatDate(syncInfo.lastSync)}
                   </div>
                   <div className="text-xs text-gray-500">
-                    Data produk, harga, dan konfigurasi dari Digiflazz API • Perubahan tersimpan otomatis
+                    Data produk, harga, gambar, dan konfigurasi dari Digiflazz API • Perubahan tersimpan otomatis
                   </div>
                 </div>
               </div>
@@ -410,6 +468,14 @@ const AdminProductsPage: React.FC = () => {
                   </div>
                   
                   <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => startEditImage(product.id)}
+                      className="inline-flex items-center gap-1 px-3 py-1 text-purple-600 hover:text-purple-700 hover:bg-purple-50 rounded-lg text-sm font-medium transition-colors"
+                      title="Edit Gambar Produk"
+                    >
+                      <Image className="w-4 h-4" />
+                      Gambar
+                    </button>
                     <button
                       onClick={() => startEditGameConfig(product.id)}
                       className="inline-flex items-center gap-1 px-3 py-1 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-lg text-sm font-medium transition-colors"
@@ -618,6 +684,129 @@ const AdminProductsPage: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Product Image Edit Modal */}
+      {editingImage && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold text-gray-900">Edit Gambar Produk</h2>
+                <button
+                  onClick={cancelImageEdit}
+                  className="text-gray-400 hover:text-gray-600"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+
+              <div className="space-y-6">
+                {/* Current Image Preview */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Preview Gambar
+                  </label>
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
+                    {editingImage.imageUrl ? (
+                      <div className="text-center">
+                        <img
+                          src={editingImage.imageUrl}
+                          alt="Preview"
+                          className="max-w-full h-48 object-cover rounded-lg mx-auto mb-2"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                            e.currentTarget.nextElementSibling!.style.display = 'block';
+                          }}
+                        />
+                        <div className="hidden text-red-500 text-sm">
+                          Gagal memuat gambar. Periksa URL gambar.
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="text-center py-8">
+                        <Image className="w-12 h-12 text-gray-400 mx-auto mb-2" />
+                        <p className="text-gray-500">Belum ada gambar</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Image URL Input */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    URL Gambar
+                  </label>
+                  <div className="relative">
+                    <LinkIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <input
+                      type="url"
+                      value={editingImage.imageUrl}
+                      onChange={(e) => setEditingImage({
+                        ...editingImage,
+                        imageUrl: e.target.value
+                      })}
+                      placeholder="https://example.com/image.jpg"
+                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    />
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Masukkan URL gambar yang valid (JPG, PNG, WebP, dll.)
+                  </p>
+                </div>
+
+                {/* Recommended Image Sources */}
+                <div className="bg-blue-50 rounded-lg p-4">
+                  <h4 className="font-semibold text-blue-900 mb-2">Sumber Gambar Rekomendasi:</h4>
+                  <ul className="text-sm text-blue-800 space-y-1">
+                    <li>• <strong>Pexels:</strong> https://www.pexels.com (Gratis, berkualitas tinggi)</li>
+                    <li>• <strong>Unsplash:</strong> https://unsplash.com (Gratis, profesional)</li>
+                    <li>• <strong>Pixabay:</strong> https://pixabay.com (Gratis, beragam)</li>
+                    <li>• <strong>Game Assets:</strong> Logo/artwork resmi dari developer game</li>
+                  </ul>
+                </div>
+
+                {/* Image Guidelines */}
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <h4 className="font-semibold text-gray-900 mb-2">Panduan Gambar:</h4>
+                  <ul className="text-sm text-gray-700 space-y-1">
+                    <li>• Ukuran optimal: 300x300px atau lebih</li>
+                    <li>• Format: JPG, PNG, WebP</li>
+                    <li>• Rasio aspek: 1:1 (persegi) atau 16:9</li>
+                    <li>• Pastikan gambar relevan dengan produk game</li>
+                    <li>• Hindari gambar dengan watermark</li>
+                  </ul>
+                </div>
+
+                {/* Actions */}
+                <div className="flex justify-between pt-6 border-t">
+                  <button
+                    onClick={removeImage}
+                    className="inline-flex items-center gap-2 px-4 py-2 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg font-medium transition-colors"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                    Hapus Gambar
+                  </button>
+                  
+                  <div className="flex gap-3">
+                    <button
+                      onClick={cancelImageEdit}
+                      className="px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium transition-colors"
+                    >
+                      Batal
+                    </button>
+                    <button
+                      onClick={saveImage}
+                      className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
+                    >
+                      Simpan Gambar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Game ID Configuration Modal */}
       {editingGameConfig && (
