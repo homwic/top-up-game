@@ -1,0 +1,288 @@
+[
+  {
+    "id": "mobile-legends",
+    "name": "Mobile Legends Diamonds",
+    "brand": "Mobile Legends",
+    "category": "moba",
+    "code": "ML",
+    "image": "https://images.pexels.com/photos/442576/pexels-photo-442576.jpeg?auto=compress&cs=tinysrgb&w=300",
+    "description": "Top up diamonds untuk Mobile Legends Bang Bang",
+    "type": "prepaid",
+    "status": "active",
+    "isPopular": true,
+    "gameIdConfig": {
+      "requiresGameId": true,
+      "gameIdLabel": "User ID",
+      "gameIdPlaceholder": "Masukkan User ID (contoh: 123456789)",
+      "requiresServerId": true,
+      "serverIdLabel": "Server ID",
+      "serverIdPlaceholder": "Masukkan Server ID (contoh: 2001)",
+      "gameIdFormat": "numeric",
+      "gameIdMinLength": 6,
+      "gameIdMaxLength": 12,
+      "serverIdFormat": "numeric",
+      "serverIdMinLength": 4,
+      "serverIdMaxLength": 4
+    },
+    "variants": [
+      {
+        "id": "ml-5",
+        "name": "5 Diamonds",
+        "amount": "5 Diamonds",
+        "price": 1500,
+        "code": "ML5",
+        "status": "active"
+      },
+      {
+        "id": "ml-12",
+        "name": "12 Diamonds",
+        "amount": "12 Diamonds",
+        "price": 3500,
+        "originalPrice": 4000,
+        "code": "ML12",
+        "status": "active"
+      },
+      {
+        "id": "ml-28",
+        "name": "28 Diamonds",
+        "amount": "28 Diamonds",
+        "price": 8000,
+        "code": "ML28",
+        "status": "active"
+      },
+      {
+        "id": "ml-85",
+        "name": "85 Diamonds",
+        "amount": "85 Diamonds",
+        "price": 24000,
+        "code": "ML85",
+        "status": "active"
+      }
+    ]
+  },
+  {
+    "id": "free-fire",
+    "name": "Free Fire Diamonds",
+    "brand": "Free Fire",
+    "category": "battle_royale",
+    "code": "FF",
+    "image": "https://images.pexels.com/photos/3165335/pexels-photo-3165335.jpeg?auto=compress&cs=tinysrgb&w=300",
+    "description": "Top up diamonds untuk Free Fire",
+    "type": "prepaid",
+    "status": "active",
+    "isPopular": true,
+    "gameIdConfig": {
+      "requiresGameId": true,
+      "gameIdLabel": "Player ID",
+      "gameIdPlaceholder": "Masukkan Player ID (contoh: 123456789)",
+      "requiresServerId": false,
+      "gameIdFormat": "numeric",
+      "gameIdMinLength": 8,
+      "gameIdMaxLength": 12
+    },
+    "variants": [
+      {
+        "id": "ff-50",
+        "name": "50 Diamonds",
+        "amount": "50 Diamonds",
+        "price": 7500,
+        "code": "FF50",
+        "status": "active"
+      },
+      {
+        "id": "ff-100",
+        "name": "100 Diamonds",
+        "amount": "100 Diamonds",
+        "price": 14000,
+        "originalPrice": 15000,
+        "code": "FF100",
+        "status": "active"
+      },
+      {
+        "id": "ff-210",
+        "name": "210 Diamonds",
+        "amount": "210 Diamonds",
+        "price": 28000,
+        "code": "FF210",
+        "status": "active"
+      },
+      {
+        "id": "ff-355",
+        "name": "355 Diamonds",
+        "amount": "355 Diamonds",
+        "price": 47000,
+        "code": "FF355",
+        "status": "active"
+      }
+    ]
+  },
+  {
+    "id": "pubg-mobile",
+    "name": "PUBG Mobile UC",
+    "brand": "PUBG Mobile",
+    "category": "battle_royale",
+    "code": "PUBG",
+    "image": "https://images.pexels.com/photos/3945313/pexels-photo-3945313.jpeg?auto=compress&cs=tinysrgb&w=300",
+    "description": "Top up Unknown Cash untuk PUBG Mobile",
+    "type": "prepaid",
+    "status": "active",
+    "gameIdConfig": {
+      "requiresGameId": true,
+      "gameIdLabel": "Player ID",
+      "gameIdPlaceholder": "Masukkan Player ID (contoh: 5123456789)",
+      "requiresServerId": false,
+      "gameIdFormat": "numeric",
+      "gameIdMinLength": 10,
+      "gameIdMaxLength": 10
+    },
+    "variants": [
+      {
+        "id": "pubg-60",
+        "name": "60 UC",
+        "amount": "60 UC",
+        "price": 15000,
+        "code": "PUBG60",
+        "status": "active"
+      },
+      {
+        "id": "pubg-325",
+        "name": "325 UC",
+        "amount": "325 UC",
+        "price": 75000,
+        "originalPrice": 80000,
+        "code": "PUBG325",
+        "status": "active"
+      },
+      {
+        "id": "pubg-660",
+        "name": "660 UC",
+        "amount": "660 UC",
+        "price": 150000,
+        "code": "PUBG660",
+        "status": "active"
+      },
+      {
+        "id": "pubg-1800",
+        "name": "1800 UC",
+        "amount": "1800 UC",
+        "price": 375000,
+        "code": "PUBG1800",
+        "status": "active"
+      }
+    ]
+  },
+  {
+    "id": "genshin-impact",
+    "name": "Genshin Impact Genesis Crystals",
+    "brand": "Genshin Impact",
+    "category": "rpg",
+    "code": "GI",
+    "image": "https://images.pexels.com/photos/7862604/pexels-photo-7862604.jpeg?auto=compress&cs=tinysrgb&w=300",
+    "description": "Top up Genesis Crystals untuk Genshin Impact",
+    "type": "prepaid",
+    "status": "active",
+    "gameIdConfig": {
+      "requiresGameId": true,
+      "gameIdLabel": "UID",
+      "gameIdPlaceholder": "Masukkan UID (contoh: 800123456)",
+      "requiresServerId": true,
+      "serverIdLabel": "Server ID",
+      "serverIdPlaceholder": "Masukkan Server ID (contoh: os_asia)",
+      "gameIdFormat": "numeric",
+      "gameIdMinLength": 9,
+      "gameIdMaxLength": 9,
+      "serverIdFormat": "alphanumeric",
+      "serverIdMinLength": 3,
+      "serverIdMaxLength": 10
+    },
+    "variants": [
+      {
+        "id": "gi-60",
+        "name": "60 Genesis Crystals",
+        "amount": "60 Genesis Crystals",
+        "price": 15000,
+        "code": "GI60",
+        "status": "active"
+      },
+      {
+        "id": "gi-300",
+        "name": "300 Genesis Crystals",
+        "amount": "300 Genesis Crystals",
+        "price": 75000,
+        "code": "GI300",
+        "status": "active"
+      },
+      {
+        "id": "gi-980",
+        "name": "980 Genesis Crystals",
+        "amount": "980 Genesis Crystals",
+        "price": 235000,
+        "code": "GI980",
+        "status": "active"
+      },
+      {
+        "id": "gi-1980",
+        "name": "1980 Genesis Crystals",
+        "amount": "1980 Genesis Crystals",
+        "price": 470000,
+        "code": "GI1980",
+        "status": "active"
+      }
+    ]
+  },
+  {
+    "id": "valorant",
+    "name": "Valorant Points",
+    "brand": "Valorant",
+    "category": "fps",
+    "code": "VAL",
+    "image": "https://images.pexels.com/photos/9072319/pexels-photo-9072319.jpeg?auto=compress&cs=tinysrgb&w=300",
+    "description": "Top up Valorant Points",
+    "type": "prepaid",
+    "status": "active",
+    "gameIdConfig": {
+      "requiresGameId": true,
+      "gameIdLabel": "Riot ID",
+      "gameIdPlaceholder": "Masukkan Riot ID (contoh: PlayerName#1234)",
+      "requiresServerId": false,
+      "gameIdFormat": "alphanumeric",
+      "gameIdMinLength": 3,
+      "gameIdMaxLength": 20
+    },
+    "variants": [
+      {
+        "id": "val-475",
+        "name": "475 VP",
+        "amount": "475 VP",
+        "price": 50000,
+        "code": "VAL475",
+        "status": "active"
+      },
+      {
+        "id": "val-1000",
+        "name": "1000 VP",
+        "amount": "1000 VP",
+        "price": 100000,
+        "originalPrice": 110000,
+        "code": "VAL1000",
+        "status": "active"
+      },
+      {
+        "id": "val-2050",
+        "name": "2050 VP",
+        "amount": "2050 VP",
+        "price": 200000,
+        "code": "VAL2050",
+        "status": "active"
+      },
+      {
+        "id": "val-3650",
+        "name": "3650 VP",
+        "amount": "3650 VP",
+        "price": 350000,
+        "code": "VAL3650",
+        "status": "active"
+      }
+    ]
+  }
+]

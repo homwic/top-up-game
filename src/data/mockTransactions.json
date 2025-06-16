@@ -1,0 +1,47 @@
+[
+  {
+    "id": "txn-001",
+    "userId": "user-001",
+    "userName": "Ahmad Rizki",
+    "userPhone": "081234567890",
+    "gameId": "123456789",
+    "productId": "ml-diamonds-12",
+    "productName": "12 Diamonds - Mobile Legends",
+    "amount": 3500,
+    "paymentMethod": "ovo",
+    "status": "success",
+    "createdAt": "2025-01-15T10:30:00Z",
+    "updatedAt": "2025-01-15T10:32:00Z",
+    "referenceId": "REF-001"
+  },
+  {
+    "id": "txn-002",
+    "userId": "user-002",
+    "userName": "Siti Nurhaliza",
+    "userPhone": "082345678901",
+    "gameId": "987654321",
+    "productId": "ff-diamonds-100",
+    "productName": "100 Diamonds - Free Fire",
+    "amount": 14000,
+    "paymentMethod": "dana",
+    "status": "processing",
+    "createdAt": "2025-01-15T11:15:00Z",
+    "updatedAt": "2025-01-15T11:15:00Z",
+    "referenceId": "REF-002"
+  },
+  {
+    "id": "txn-003",
+    "userId": "user-003",
+    "userName": "Budi Santoso",
+    "userPhone": "083456789012",
+    "gameId": "456789123",
+    "productId": "pubg-uc-325",
+    "productName": "325 UC - PUBG Mobile",
+    "amount": 75000,
+    "paymentMethod": "gopay",
+    "status": "failed",
+    "createdAt": "2025-01-15T09:45:00Z",
+    "updatedAt": "2025-01-15T09:47:00Z",
+    "referenceId": "REF-003"
+  }
+]
